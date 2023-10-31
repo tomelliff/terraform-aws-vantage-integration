@@ -123,7 +123,15 @@ resource "aws_iam_role_policy_attachment" "vantage_cross_account_connection_with
   policy_arn = "arn:aws:iam::aws:policy/job-function/ViewOnlyAccess"
 }
 
+# CUR report has to be created in us-east-1 but the bucket can be in any region
+provider "aws" {
+  region = "us-east-1"
+  alias  = "us_east_1"
+}
+
 resource "aws_cur_report_definition" "vantage_cost_and_usage_reports" {
+  provider = aws.us_east_1
+
   count                      = var.cur_bucket_name != "" ? 1 : 0
   report_name                = var.cur_report_name
   time_unit                  = "DAILY"
