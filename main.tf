@@ -131,7 +131,7 @@ resource "aws_cur_report_definition" "vantage_cost_and_usage_reports" {
   compression                = "GZIP"
   additional_schema_elements = ["RESOURCES"]
   s3_bucket                  = aws_s3_bucket.vantage_cost_and_usage_reports[0].id
-  s3_region                  = "us-east-1"
+  s3_region                  = aws_s3_bucket.vantage_cost_and_usage_reports[0].region
   s3_prefix                  = "daily-v1"
   report_versioning          = "OVERWRITE_REPORT"
   refresh_closed_reports     = true
